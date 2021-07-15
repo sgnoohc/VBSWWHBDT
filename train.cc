@@ -18,22 +18,15 @@
 int main(int argc, char** argv)
 {
 
-    if(argc != 2)
-    {
-        std::cout << "usage  :  ./%s CATEG" << std::endl;
-        return 1;
-    }
-    int categ = atoi(argv[1]);
-
     //___________________________________________________________________________________________________________________________________________________________
     // Setting output file
-    TString outfileName(Form("TMVAoutput_categ%d.root", categ));
+    TString outfileName("TMVAoutput.root");
     TFile* outputFile = TFile::Open(outfileName,"RECREATE");
 
     //___________________________________________________________________________________________________________________________________________________________
     // Instantiating TMVA related items
     TMVA::Tools::Instance();
-    TMVA::DataLoader* dataloader = new TMVA::DataLoader(Form("dataset_categ%d", categ));
+    TMVA::DataLoader* dataloader = new TMVA::DataLoader("dataset");
     TMVA::Factory *factory = new TMVA::Factory("TMVAClassification", outputFile, "!V:!Silent:Color:DrawProgressBar:Transformations=I;P,D:AnalysisType=Classification");
 
     //___________________________________________________________________________________________________________________________________________________________
@@ -116,8 +109,6 @@ int main(int argc, char** argv)
     //___________________________________________________________________________________________________________________________________________________________
     // Apply preselection
     TString cut = "";
-    cut += Form("(categ==%d)", categ); // 0=e+l+, 1=m+l+, 2=t+l+, 3=l-l-
-    cut += "&&";
     cut += "(channel >= 0)";
     cut += "&&";
     cut += "(mjj > 500)";
