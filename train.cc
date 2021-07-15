@@ -15,18 +15,25 @@
 #include "TMVA/DataLoader.h"
 #include "TMVA/Tools.h"
 
-int main()
+int main(int argc, char** argv)
 {
+
+    if(argc != 2)
+    {
+        std::cout << "usage  :  ./%s CATEG" << std::endl;
+        return 1;
+    }
+    int categ = atoi(argv[1]);
 
     //___________________________________________________________________________________________________________________________________________________________
     // Setting output file
-    TString outfileName("TMVAoutput.root");
+    TString outfileName(Form("TMVAoutput_categ%d.root", categ));
     TFile* outputFile = TFile::Open(outfileName,"RECREATE");
 
     //___________________________________________________________________________________________________________________________________________________________
     // Instantiating TMVA related items
     TMVA::Tools::Instance();
-    TMVA::DataLoader* dataloader = new TMVA::DataLoader("dataset");
+    TMVA::DataLoader* dataloader = new TMVA::DataLoader(Form("dataset_categ%d", categ));
     TMVA::Factory *factory = new TMVA::Factory("TMVAClassification", outputFile, "!V:!Silent:Color:DrawProgressBar:Transformations=I;P,D:AnalysisType=Classification");
 
     //___________________________________________________________________________________________________________________________________________________________
@@ -109,21 +116,13 @@ int main()
     //___________________________________________________________________________________________________________________________________________________________
     // Apply preselection
     TString cut = "";
-    // cut += "(categ==0)"; // e+l+
-    // cut += "&&";
-    // cut += "(categ==1)"; // m+l+
-    // cut += "&&";
-    // cut += "(categ==2)"; // t+l+
-    // cut += "&&";
-    // cut += "(categ==3)"; // l-l-
-    // cut += "&&";
+    cut += Form("(categ==%d)", categ); // 0=e+l+, 1=m+l+, 2=t+l+, 3=l-l-
+    cut += "&&";
     cut += "(channel >= 0)";
     cut += "&&";
     cut += "(mjj > 500)";
     cut += "&&";
     cut += "(fabs(detajj) > 3)";
-    // cut += "&&";
-    // cut += "(mbb < 150)";
     dataloader->AddCut(cut, "Signal");
     dataloader->AddCut(cut, "Background");
 
