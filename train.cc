@@ -82,54 +82,48 @@ int main()
 
     //___________________________________________________________________________________________________________________________________________________________
     // Input variables
-    dataloader->AddVariable("met",'F');
-    dataloader->AddVariable("l0pt",'F');
-    dataloader->AddVariable("l1pt",'F');
-    dataloader->AddVariable("ptbb",'F');
-    dataloader->AddVariable("mjj",'F');
-    dataloader->AddVariable("detajj",'F');
-    dataloader->AddVariable("j_lead_p",'F');
-    dataloader->AddVariable("j_sublead_p",'F');
-    dataloader->AddVariable("st",'F');
-    // dataloader->AddVariable("btagchannel",'I');
-    // dataloader->AddVariable("lt",'F');
-    // dataloader->AddVariable("categ",'I');
-    // dataloader->AddVariable("firbjetscore",'F');
-    // dataloader->AddSpectator("spec := var1","Spectator","units",'F');
-    // dataloader->AddVariable("lepton1pt",'F');
-    // dataloader->AddVariable("lepton2pt",'F');
-    // dataloader->AddVariable("lepton1reliso",'F');
-    // dataloader->AddVariable("lepton2reliso",'F');
-    // dataloader->AddVariable("bjetscoretype := bjetscoretype",'I');
-    // dataloader->AddVariable("dibjetmass",'F');
-    // dataloader->AddVariable("bjet1eta",'F');
-    // dataloader->AddVariable("bjet2eta",'F');
-    // dataloader->AddVariable("dibjetdeltaR",'F');
-    // dataloader->AddVariable("dibjetdeta",'F');
-    // dataloader->AddVariable("dibjetdphi",'F');
-    // dataloader->AddVariable("leadingvbfjetp",'F');
-    // dataloader->AddVariable("subleadvbfjetp",'F');
-    // dataloader->AddVariable("divbfjetmass",'F');
-    // dataloader->AddVariable("divbfjetdeta",'F');
-    // dataloader->AddVariable("divbfjetdphi",'F');
-    // dataloader->AddVariable("vbfjet1eta",'F');
-    // dataloader->AddVariable("vbfjet2eta",'F');
-    // dataloader->AddVariable("vbfjet1Pt",'F');
-    // dataloader->AddVariable("vbfjet2Pt",'F');
-    // dataloader->AddVariable("divbfjetPt",'F');
-    // dataloader->AddVariable("divbfjetdeltaR",'F');
-    // dataloader->AddVariable("btagregion",'I');
-    // dataloader->AddVariable("lepregion",'I');
-    // dataloader->AddVariable("eventtype",'F');
+    dataloader->AddVariable("mbb"         , 'F');
+    dataloader->AddVariable("dphibb"      , 'F');
+    dataloader->AddVariable("detabb"      , 'F');
+    dataloader->AddVariable("drbb"        , 'F');
+    dataloader->AddVariable("ptbb"        , 'F');
+    dataloader->AddVariable("b0pt"        , 'F');
+    dataloader->AddVariable("b1pt"        , 'F');
+    dataloader->AddVariable("b0tight"     , 'I');
+    dataloader->AddVariable("b1tight"     , 'I');
+    dataloader->AddVariable("mjj"         , 'F');
+    dataloader->AddVariable("dphijj"      , 'F');
+    dataloader->AddVariable("detajj"      , 'F');
+    dataloader->AddVariable("drjj"        , 'F');
+    dataloader->AddVariable("ptjj"        , 'F');
+    dataloader->AddVariable("j0pt"        , 'F');
+    dataloader->AddVariable("j1pt"        , 'F');
+    dataloader->AddVariable("j_lead_p"    , 'F');
+    dataloader->AddVariable("j_sublead_p" , 'F');
+    dataloader->AddVariable("mll"         , 'F');
+    dataloader->AddVariable("dphill"      , 'F');
+    dataloader->AddVariable("detall"      , 'F');
+    dataloader->AddVariable("drll"        , 'F');
+    dataloader->AddVariable("ptll"        , 'F');
+    dataloader->AddVariable("l0pt"        , 'F');
+    dataloader->AddVariable("l1pt"        , 'F');
+    dataloader->AddVariable("met"         , 'F');
+    dataloader->AddVariable("lt"          , 'F');
+    dataloader->AddVariable("st"          , 'F');
+    dataloader->AddVariable("mvvh"        , 'F');
+    dataloader->AddVariable("mtvvh"       , 'F');
+    dataloader->AddVariable("ptvvh"       , 'F');
 
     //___________________________________________________________________________________________________________________________________________________________
     // Apply preselection
-    TCut mycut1 = "leadlepID == -11";
-    TCut mycut2 = "subllepID != -15";
-    TCut mycut3 = "mjj > 500";
-    TCut mycut4 = "fabs(detajj) > 3";
-    TCut mycut5 = "mbb < 150";
-    TCut mycuts = mycut1 && mycut2 && mycut3 && mycut4 && mycut5;
+    TCut mycut1 = "categ==0"; // e+l+
+    // TCut mycut1 = "categ==1"; // m+l+
+    // TCut mycut1 = "categ==2"; // t+l+
+    // TCut mycut1 = "categ==3"; // l-l-
+    TCut mycut2 = "mjj > 500";
+    TCut mycut3 = "fabs(detajj) > 3";
+    TCut mycut4 = "mbb < 150";
+    TCut mycuts = mycut1 && mycut2 && mycut3 && mycut4;
     TCut mycutb = mycuts;
     dataloader->AddCut(mycuts, "Signal");
     dataloader->AddCut(mycutb, "Background");
