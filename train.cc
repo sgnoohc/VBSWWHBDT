@@ -27,7 +27,7 @@ int main()
     // Instantiating TMVA related items
     TMVA::Tools::Instance();
     TMVA::DataLoader* dataloader = new TMVA::DataLoader("dataset");
-    TMVA::Factory *factory = new TMVA::Factory("TMVAClassification", outputFile, "!V:!Silent:Color:DrawProgressBar:Transformations=I;D;P;G,D:AnalysisType=Classification");
+    TMVA::Factory *factory = new TMVA::Factory("TMVAClassification", outputFile, "!V:!Silent:Color:DrawProgressBar:Transformations=I;P,D:AnalysisType=Classification");
 
     //___________________________________________________________________________________________________________________________________________________________
     // Reading inputs
@@ -73,12 +73,12 @@ int main()
     dataloader->AddBackgroundTree(tree_BKG_ttw_test      , 1.0 , TMVA::Types::kTesting);
     dataloader->AddBackgroundTree(tree_BKG_ttz_train     , 1.0 , TMVA::Types::kTraining);
     dataloader->AddBackgroundTree(tree_BKG_ttz_test      , 1.0 , TMVA::Types::kTesting);
-    dataloader->SetBackgroundWeightExpression("wgt*lepsf*btagsf");
+    dataloader->SetBackgroundWeightExpression("fabs(wgt*lepsf*btagsf)");
 
     // Loading signals
     dataloader->AddSignalTree(tree_SIG_4p5_train , 1.0 , TMVA::Types::kTraining);
     dataloader->AddSignalTree(tree_SIG_4p5_test  , 1.0 , TMVA::Types::kTesting);
-    dataloader->SetSignalWeightExpression("wgt*lepsf*btagsf");
+    dataloader->SetSignalWeightExpression("fabs(wgt*lepsf*btagsf)");
 
     //___________________________________________________________________________________________________________________________________________________________
     // Input variables
@@ -129,9 +129,9 @@ int main()
     cut += "&&";
     cut += "(mjj > 500)";
     cut += "&&";
-    cut += "fabs(detajj) > 3";
+    cut += "(fabs(detajj) > 3)";
     cut += "&&";
-    cut += "mbb < 150";
+    cut += "(mbb < 150)";
     dataloader->AddCut(cut, "Signal");
     dataloader->AddCut(cut, "Background");
 
