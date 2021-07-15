@@ -89,20 +89,14 @@ int main()
     dataloader->AddVariable("ptbb"        , 'F');
     dataloader->AddVariable("b0pt"        , 'F');
     dataloader->AddVariable("b1pt"        , 'F');
-    dataloader->AddVariable("b0tight"     , 'I');
-    dataloader->AddVariable("b1tight"     , 'I');
     dataloader->AddVariable("mjj"         , 'F');
-    dataloader->AddVariable("dphijj"      , 'F');
     dataloader->AddVariable("detajj"      , 'F');
     dataloader->AddVariable("drjj"        , 'F');
     dataloader->AddVariable("ptjj"        , 'F');
-    dataloader->AddVariable("j0pt"        , 'F');
-    dataloader->AddVariable("j1pt"        , 'F');
     dataloader->AddVariable("j_lead_p"    , 'F');
     dataloader->AddVariable("j_sublead_p" , 'F');
     dataloader->AddVariable("mll"         , 'F');
     dataloader->AddVariable("dphill"      , 'F');
-    dataloader->AddVariable("detall"      , 'F');
     dataloader->AddVariable("drll"        , 'F');
     dataloader->AddVariable("ptll"        , 'F');
     dataloader->AddVariable("l0pt"        , 'F');
@@ -110,9 +104,7 @@ int main()
     dataloader->AddVariable("met"         , 'F');
     dataloader->AddVariable("lt"          , 'F');
     dataloader->AddVariable("st"          , 'F');
-    dataloader->AddVariable("mvvh"        , 'F');
     dataloader->AddVariable("mtvvh"       , 'F');
-    dataloader->AddVariable("ptvvh"       , 'F');
 
     //___________________________________________________________________________________________________________________________________________________________
     // Apply preselection
@@ -130,8 +122,8 @@ int main()
     cut += "(mjj > 500)";
     cut += "&&";
     cut += "(fabs(detajj) > 3)";
-    cut += "&&";
-    cut += "(mbb < 150)";
+    // cut += "&&";
+    // cut += "(mbb < 150)";
     dataloader->AddCut(cut, "Signal");
     dataloader->AddCut(cut, "Background");
 
