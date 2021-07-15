@@ -108,7 +108,7 @@ int main(int argc, char** argv)
     outputfile<<endl<<endl;
 
     for(int ii = 0 ; ii < plot_BKG_BDT_SUM_response->GetXaxis()->GetNbins() ; ii++){
-        outputfile<<0.58 * sqrt(plot_BKG_BDT_SUM_response->GetBinContent(ii + 1))<<" , ";
+        outputfile<<0.6 * plot_BKG_BDT_SUM_response->GetBinContent(ii + 1)<<" , ";
     }
     outputfile<<endl<<endl;
 
