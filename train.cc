@@ -116,17 +116,24 @@ int main()
 
     //___________________________________________________________________________________________________________________________________________________________
     // Apply preselection
-    TCut mycut1 = "categ==0"; // e+l+
-    // TCut mycut1 = "categ==1"; // m+l+
-    // TCut mycut1 = "categ==2"; // t+l+
-    // TCut mycut1 = "categ==3"; // l-l-
-    TCut mycut2 = "mjj > 500";
-    TCut mycut3 = "fabs(detajj) > 3";
-    TCut mycut4 = "mbb < 150";
-    TCut mycuts = mycut1 && mycut2 && mycut3 && mycut4;
-    TCut mycutb = mycuts;
-    dataloader->AddCut(mycuts, "Signal");
-    dataloader->AddCut(mycutb, "Background");
+    TString cut = "";
+    // cut += "(categ==0)"; // e+l+
+    // cut += "&&";
+    // cut += "(categ==1)"; // m+l+
+    // cut += "&&";
+    // cut += "(categ==2)"; // t+l+
+    // cut += "&&";
+    // cut += "(categ==3)"; // l-l-
+    // cut += "&&";
+    cut += "(channel >= 0)";
+    cut += "&&";
+    cut += "(mjj > 500)";
+    cut += "&&";
+    cut += "fabs(detajj) > 3";
+    cut += "&&";
+    cut += "mbb < 150";
+    dataloader->AddCut(cut, "Signal");
+    dataloader->AddCut(cut, "Background");
 
     //___________________________________________________________________________________________________________________________________________________________
     // Run the code
