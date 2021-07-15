@@ -119,7 +119,8 @@ int main(int argc, char** argv)
 
     //___________________________________________________________________________________________________________________________________________________________
     // Run the code
-    factory->BookMethod(dataloader, TMVA::Types::kBDT, "BDT","!H:!V:NTrees=800:BoostType=Bagging:SeparationType=GiniIndex:nCuts=20" );
+    factory->BookMethod(dataloader, TMVA::Types::kBDT, "BDT","!H:!V:NTrees=800:BoostType=Bagging:SeparationType=CrossEntropy:nCuts=20" );
+    factory->BookMethod(dataloader, TMVA::Types::kBDT, "BDT2","!H:!V:NTrees=800:BoostType=Bagging:SeparationType=SDivSqrtSPlusB:nCuts=20" );
     factory->TrainAllMethods();
     factory->TestAllMethods();
     factory->EvaluateAllMethods();
