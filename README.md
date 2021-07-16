@@ -5,4 +5,5 @@
     cd VBSWWHBDT
     source setup.sh
     make -j
-    sh run.sh
+    ./train
+    sh apply.sh

@@ -22,7 +22,7 @@ int main(int argc, char** argv)
 
     //___________________________________________________________________________________________________________________________________________________________
     // Output file
-    TFile* ofile = new TFile(Form("%s.root", process.Data()), "recreate");
+    TFile* ofile = new TFile(Form("output/%s_%s.root", process.Data(), treename.Data()), "recreate");
 
     //___________________________________________________________________________________________________________________________________________________________
     // Reading inputs
@@ -61,6 +61,8 @@ int main(int argc, char** argv)
     tx.createBranch<float>("mtvvh"       );
     tx.createBranch<float>("event_weight");
     tx.createBranch<float>("BDTscore"    );
+    tx.createBranch<int>  ("categ"       );
+    tx.createBranch<int>  ("channel"     );
 
     RooUtil::TMVAUtil::ReaderX readerX("BDT", "dataset/weights/TMVAClassification_BDT.weights.xml");
 
@@ -92,6 +94,8 @@ int main(int argc, char** argv)
         tx.setBranch<float>("mtvvh"        , vbs.mtvvh());
         tx.setBranch<float>("event_weight" , vbs.wgt() * vbs.lepsf() * vbs.btagsf());
         tx.setBranch<float>("BDTscore"     , readerX.eval(tx));
+        tx.setBranch<int>("categ"          , vbs.categ());
+        tx.setBranch<int>("channel"        , vbs.channel());
 
         tx.fill();
     }
