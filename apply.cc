@@ -66,6 +66,38 @@ int main(int argc, char** argv)
 
     RooUtil::TMVAUtil::ReaderX readerX("BDT", "dataset/weights/TMVAClassification_BDT.weights.xml");
 
+    // Xsection SF from (test events) -> (train + test events)
+    //___________________________________________________________________________________________________________________________________________________________
+    // bosons : 1.62521
+    // raretop : 1.97812
+    // tt1l : 2.02885
+    // tt2l : 2.0113
+    // tt1lpowheg : 1.95004
+    // tt2lpowheg : 1.93316
+    // ttw : 1.98607
+    // ttz : 1.86443
+    // vbshww_c2v_4p5 : 1.99914
+    float xsec_sf = 1.;
+    if (process.EqualTo("bosons")) xsec_sf = 1.62521;
+    if (process.EqualTo("raretop")) xsec_sf = 1.97812;
+    if (process.EqualTo("ttw")) xsec_sf = 1.98607;
+    if (process.EqualTo("ttz")) xsec_sf = 1.86443;
+    if (process.EqualTo("vbshww_c2v_4p5")) xsec_sf = 1.99914;
+
+    // Xsection SF from (test events) -> (train + test events) (with LT >= 250)
+    //___________________________________________________________________________________________________________________________________________________________
+    // bosons : 1.82449
+    // raretop : 1.88327
+    // tt1l : 1.92888
+    // tt2l : 2.13472
+    // tt1lpowheg : 1.80935
+    // tt2lpowheg : 1.857
+    // ttw : 2.00553
+    // ttz : 2.12104
+    // vbshww_c2v_4p5 : 1.99984
+
+    //___________________________________________________________________________________________________________________________________________________________
+    // Event Loop
     while (looper.nextEvent())
     {
 
@@ -92,7 +124,7 @@ int main(int argc, char** argv)
         tx.setBranch<float>("lt"           , vbs.lt());
         tx.setBranch<float>("st"           , vbs.st());
         tx.setBranch<float>("mtvvh"        , vbs.mtvvh());
-        tx.setBranch<float>("event_weight" , vbs.wgt() * vbs.lepsf() * vbs.btagsf());
+        tx.setBranch<float>("event_weight" , vbs.wgt() * vbs.lepsf() * vbs.btagsf() * xsec_sf);
         tx.setBranch<float>("BDTscore"     , readerX.eval(tx));
         tx.setBranch<int>("categ"          , vbs.categ());
         tx.setBranch<int>("channel"        , vbs.channel());
