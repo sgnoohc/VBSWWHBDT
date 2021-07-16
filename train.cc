@@ -27,7 +27,7 @@ int main(int argc, char** argv)
     // Instantiating TMVA related items
     TMVA::Tools::Instance();
     TMVA::DataLoader* dataloader = new TMVA::DataLoader("dataset");
-    TMVA::Factory *factory = new TMVA::Factory("TMVAClassification", outputFile, "!V:!Silent:Color:DrawProgressBar:Transformations=I;P,D:AnalysisType=Classification");
+    TMVA::Factory *factory = new TMVA::Factory("TMVAClassification", outputFile, "V:!Silent:Color:DrawProgressBar:Transformations=I;P,D:AnalysisType=Classification");
 
     //___________________________________________________________________________________________________________________________________________________________
     // Reading inputs
@@ -109,18 +109,19 @@ int main(int argc, char** argv)
     //___________________________________________________________________________________________________________________________________________________________
     // Apply preselection
     TString cut = "";
-    cut += "(channel >= 0)";
-    cut += "&&";
-    cut += "(mjj > 500)";
-    cut += "&&";
-    cut += "(fabs(detajj) > 3)";
+    cut += "(channel>=0)";
+    cut += "*";
+    cut += "(mjj>=500)";
+    cut += "*";
+    cut += "(fabs(detajj)>3)";
+    cut += "*";
+    cut += "(lt>=250)";
     dataloader->AddCut(cut, "Signal");
     dataloader->AddCut(cut, "Background");
 
     //___________________________________________________________________________________________________________________________________________________________
     // Run the code
-    factory->BookMethod(dataloader, TMVA::Types::kBDT, "BDT","!H:!V:NTrees=800:BoostType=Bagging:SeparationType=CrossEntropy:nCuts=20" );
-    factory->BookMethod(dataloader, TMVA::Types::kBDT, "BDT2","!H:!V:NTrees=800:BoostType=Bagging:SeparationType=SDivSqrtSPlusB:nCuts=20" );
+    factory->BookMethod(dataloader, TMVA::Types::kBDT, "BDT","!H:!V:MaxDepth=3:NTrees=800:BoostType=Grad:SeparationType=CrossEntropy:nCuts=20:NodePurityLimit=0.9" );
     factory->TrainAllMethods();
     factory->TestAllMethods();
     factory->EvaluateAllMethods();
