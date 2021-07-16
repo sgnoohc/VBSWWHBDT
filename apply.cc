@@ -78,11 +78,14 @@ int main(int argc, char** argv)
     // ttz : 1.86443
     // vbshww_c2v_4p5 : 1.99914
     float xsec_sf = 1.;
-    if (process.EqualTo("bosons")) xsec_sf = 1.62521;
-    if (process.EqualTo("raretop")) xsec_sf = 1.97812;
-    if (process.EqualTo("ttw")) xsec_sf = 1.98607;
-    if (process.EqualTo("ttz")) xsec_sf = 1.86443;
-    if (process.EqualTo("vbshww_c2v_4p5")) xsec_sf = 1.99914;
+    if (treename.Contains("_test"))
+    {
+        if (process.EqualTo("bosons")) xsec_sf = 1.62521;
+        if (process.EqualTo("raretop")) xsec_sf = 1.97812;
+        if (process.EqualTo("ttw")) xsec_sf = 1.98607;
+        if (process.EqualTo("ttz")) xsec_sf = 1.86443;
+        if (process.EqualTo("vbshww_c2v_4p5")) xsec_sf = 1.99914;
+    }
 
     // Xsection SF from (test events) -> (train + test events) (with LT >= 250)
     //___________________________________________________________________________________________________________________________________________________________
