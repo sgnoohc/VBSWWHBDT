@@ -27,7 +27,8 @@ int main(int argc, char** argv)
     // Instantiating TMVA related items
     TMVA::Tools::Instance();
     TMVA::DataLoader* dataloader = new TMVA::DataLoader("dataset");
-    TMVA::Factory *factory = new TMVA::Factory("TMVAClassification", outputFile, "V:!Silent:Color:DrawProgressBar:Transformations=I;P,D:AnalysisType=Classification");
+    // TMVA::Factory *factory = new TMVA::Factory("TMVAClassification", outputFile, "V:!Silent:Color:DrawProgressBar:Transformations=I;D;P;U;G,D:AnalysisType=Classification");
+    TMVA::Factory *factory = new TMVA::Factory("TMVAClassification", outputFile, "V:!Silent:Color:DrawProgressBar:AnalysisType=Classification");
 
     //___________________________________________________________________________________________________________________________________________________________
     // Reading inputs
@@ -109,6 +110,8 @@ int main(int argc, char** argv)
     //___________________________________________________________________________________________________________________________________________________________
     // Apply preselection
     TString cut = "";
+    // cut += "(categ==1)";
+    // cut += "*";
     cut += "(channel>=0)";
     cut += "*";
     cut += "(mjj>=500)";
@@ -121,7 +124,7 @@ int main(int argc, char** argv)
 
     //___________________________________________________________________________________________________________________________________________________________
     // Run the code
-    factory->BookMethod(dataloader, TMVA::Types::kBDT, "BDT","!H:!V:MaxDepth=3:NTrees=800:BoostType=Grad:SeparationType=CrossEntropy:nCuts=20:NodePurityLimit=0.9" );
+    factory->BookMethod(dataloader, TMVA::Types::kBDT, "BDT","!H:!V:MaxDepth=5:NTrees=800:BoostType=RealAdaBoost:SeparationType=CrossEntropy:nCuts=-1:NodePurityLimit=0.99:UseYesNoLeaf=False:MinNodeSize=0.01%" );
     factory->TrainAllMethods();
     factory->TestAllMethods();
     factory->EvaluateAllMethods();
